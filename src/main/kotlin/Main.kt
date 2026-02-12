@@ -7,7 +7,7 @@ import watcher.FileWatcher
 
 class FramesConfig{
     val inDir: String = "./resources/frames"
-    val outDir: String = "C:\\Users\\Doghouse\\FSrc\\Mechanica\\primagame\\src\\main\\kotlin\\com\\vtess\\game\\level\\player\\armature\\frames"
+    val outDir: String = "/home/doghouse/Source/Mechanica/v-tess/src/main/kotlin/com/vtess/game/level/player/armature/frames"
 }
 
 class PartsConfig {
