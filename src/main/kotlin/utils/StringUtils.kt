@@ -32,3 +32,7 @@ fun String.kebabToCamelCase(): String {
             it.value[1].uppercase()
         }
 }
+
+fun String.kebabToPascalCase(): String {
+    return this.kebabToCamelCase().replaceFirstChar { it.uppercaseChar() }
+}

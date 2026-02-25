@@ -63,7 +63,7 @@ class PartsParser(file: File) {
         val list = ArrayList<ArmaturePoint>()
         for (id in ids.ids) {
             val el = doc.getElementById(id) ?: return null
-            list.add(ArmaturePoint(el))
+            list.add(ArmaturePoint(el.id(), el.attr("cx").toDouble(), el.attr("cy").toDouble()))
         }
         val viewBox = findViewBox()
         return ArmaturePart(fileName, ids.variableName, ids.className, list, viewBox)

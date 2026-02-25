@@ -1,12 +1,6 @@
 package armatureScript
 
-import org.jsoup.nodes.Element
-
-class ArmaturePoint(circleElement: Element) {
-    val id: String = circleElement.id()
-    val x = circleElement.attr("cx").toDouble()
-    val y = circleElement.attr("cy").toDouble()
-
+class ArmaturePoint(val id: String, val x: Double, val y: Double) {
     override fun toString(): String {
         return "($x, $y)"
     }

@@ -2,13 +2,15 @@ package armatureScript
 
 import generator.ClassBuilder
 import generator.ScriptBuilderContext
-import org.jsoup.Jsoup
+import org.intellij.lang.annotations.Language
 import svg.SvgFileParser
 import utils.camelToSnakeCase
 import utils.kebabToCamelCase
+import java.nio.file.Paths
 
-class VTessFrameParser(location: String, fileName: String) : SvgFileParser("$location\\$fileName") {
+class VTessFrameParser(inputLocation: String) : SvgFileParser(inputLocation) {
     private val points = getArmaturePointsFromFile()
+    private val fileName = inputLocation.substringAfterLast('/').substringAfterLast('\\')
     private val frameName = fileName.removeSuffix(".svg").kebabToCamelCase()
 
     override fun ScriptBuilderContext.buildScript() {
@@ -31,17 +33,44 @@ class VTessFrameParser(location: String, fileName: String) : SvgFileParser("$loc
 
     private fun getArmaturePointsFromFile(): List<ArmaturePoint> {
         val svg = file.readText()
-
-        val doc = Jsoup.parse(svg)
-
-        return ArmatureData.allPointIds.map {
-            val el = doc.getElementById(it) ?: throw IllegalStateException("Cannot find id: $it")
-            ArmaturePoint(el)
+        return com.microsoft.playwright.Playwright.create().use { playwright ->
+            val browser = playwright.chromium().launch()
+            val page = browser.newPage()
+            
+            page.setContent(svg)
+            
+            ArmatureData.allPointIds.map { pointId ->
+                @Language("JavaScript") val result = page.evaluate("""
+                    (id) => {
+                        const circle = document.getElementById(id);
+                        if (!circle) return null;
+                        const rect = circle.getBoundingClientRect();
+                        return {
+                            x: rect.x + rect.width / 2,
+                            y: rect.y + rect.height / 2
+                        };
+                    }
+                """, pointId)
+                
+                if (result == null) {
+                    throw IllegalStateException("Cannot find id: $pointId")
+                }
+                
+                @Suppress("UNCHECKED_CAST")
+                val coords = result as Map<String, Any>
+                val x = (coords["x"] as Number).toDouble()
+                val y = (coords["y"] as Number).toDouble()
+                
+                ArmaturePoint(pointId, x, y)
+            }.also {
+                browser.close()
+            }
         }
     }
 
     fun createFileWithFrameName(outDir: String) {
-        createFile("${outDir}\\${frameName}.kt")
+        val outPath = Paths.get(outDir).resolve("$frameName.kt")
+        createFile(outPath.toString())
     }
 
 }

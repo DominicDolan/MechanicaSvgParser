@@ -3,6 +3,7 @@ import cmd.CommandParser
 import cmd.RunMode
 import modes.generateFrames
 import modes.generateParts
+import modes.generatePaths
 import watcher.FileWatcher
 
 class FramesConfig{
@@ -16,23 +17,42 @@ class PartsConfig {
     val outDirImg: String = "F:\\Src\\Mechanica\\primagame\\src\\main\\resources\\res\\images\\new"
 }
 
+
+class PathsConfig{
+    val inDir: String = "./resources/paths"
+    val outDir: String = "/home/doghouse/Source/Mechanica/v-tess/src/main/kotlin/com/vtess/game/level/player/sprite"
+}
+
+fun runCommand(arguments: CommandArguments, command: (file: String) -> Unit) {
+    if (!arguments.watch) {
+        for (file in arguments.fileList) {
+            command(file)
+        }
+    } else {
+        // Watch the original glob pattern from inDir or the expanded file list
+        val watchPatterns = if (arguments.inDir.contains('*') || arguments.inDir.contains('?') || arguments.inDir.contains('[')) {
+            listOf(arguments.inDir)
+        } else {
+            arguments.fileList
+        }
+
+        val watcher = FileWatcher(watchPatterns)
+
+        watcher.watch {
+            println("File changed: ${it.absolutePath}")
+            command(it.absolutePath)
+        }
+    }
+}
+
 fun main(args: Array<String>) {
     val arguments: CommandArguments = CommandParser(args)
     if (arguments.mode == RunMode.PARTS) {
         generateParts(PartsConfig())
     } else if (arguments.mode == RunMode.FRAMES) {
-        val config = FramesConfig()
-        if (!arguments.watch) {
-            for (file in arguments.frameList) {
-                generateFrames(config, file)
-            }
-        } else {
-            val watcher = FileWatcher(config.inDir)
-
-            watcher.watch {
-                generateFrames(config, it.name)
-            }
-        }
+        runCommand(arguments) { generateFrames(FramesConfig(), it) }
+    } else if (arguments.mode == RunMode.PATHS) {
+        runCommand(arguments) { generatePaths(PathsConfig(), it) }
     }
 
 }
