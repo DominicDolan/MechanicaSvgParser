@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (e7c3feb, 2024-10-09)"
+   sodipodi:docname="dust-particles.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="3.2680674"
+     inkscape:cx="114.59372"
+     inkscape:cy="135.09513"
+     inkscape:window-width="1828"
+     inkscape:window-height="1489"
+     inkscape:window-x="26"
+     inkscape:window-y="23"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#ff00ff;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round"
+       d="m 17.001638,15.058594 -4.77665,-2.833606 -4.9385716,2.752646 4.6147306,2.185924 z"
+       id="diamond" />
+    <path
+       style="fill:#ff00ff;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round"
+       d="M 19.916205,23.802293 12.629788,20.725807 4.857611,22.18309 Z"
+       id="longSharp" />
+    <path
+       style="fill:#ff00ff;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round"
+       d="m 9.2294608,30.521989 3.8860882,-2.914568 2.347846,3.40033 z"
+       id="triangle" />
+    <path
+       style="fill:#ff00ff;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round"
+       d="M 15.706275,37.727445 10.039062,35.703441 1.0524824,36.836884 11.739227,40.318171 Z"
+       id="diamondUneven"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="fill:#ff00ff;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round"
+       d="M 19.430444,47.280747 2.3478453,44.1233 13.601311,47.847466 Z"
+       id="longSharp2" />
+  </g>
+</svg>
